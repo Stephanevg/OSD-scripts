@@ -68,7 +68,8 @@ Param(
         [Parameter(Mandatory=$false)][switch]$All,
         [Parameter(Mandatory=$false)][switch]$WMI,
         [Parameter(Mandatory=$false)][switch]$Registry,
-        [Parameter(Mandatory=$false)][switch]$EnvironmentVariable
+        [Parameter(Mandatory=$false)][switch]$EnvironmentVariable,
+        [Parameter(Mandatory=$false)][switch]$Root="OSBuildInfo"
 )
 Function Set-EnvironmentVariable {
 <#
@@ -606,7 +607,7 @@ Function New-OSDTattoo{
     }
 
     $VarTatoos = Get-Variable -Name "PSDistrict_*"
-    $Root = "Woop"
+    
 
     foreach ($Tatoo in $VarTatoos){
     
@@ -617,20 +618,20 @@ Function New-OSDTattoo{
                 break
             }
             "WMI" {
-                New-OSDTattoo -Root $Root -Name $($Tatoo.Name) -Value $($Tatoo.value) -wmi
+                New-OSDTattoo -Root $Root -PropertyName $($Tatoo.Name) -PropertyValue $($Tatoo.value) -wmi
                 break
             }
             "Registry"{
-                New-OSDTattoo -Root $Root -Name $($Tatoo.Name) -Value $($Tatoo.value) -Registry
+                New-OSDTattoo -Root $Root -PropertyName $($Tatoo.Name) -PropertyValue $($Tatoo.value) -Registry
                 Break
             }
             "EnvironmentVariable"{
-                New-OSDTattoo -Root $Root -Name $($Tatoo.Name) -Value $($Tatoo.value) -EnvironmentVariable
+                New-OSDTattoo -Root $Root -PropertyName $($Tatoo.Name) -PropertyValue $($Tatoo.value) -EnvironmentVariable
                 break
             }
             default{
             
-                New-OSDTattoo -Root $Root -Name $($Tatoo.Name) -Value $($Tatoo.value) -All
+                New-OSDTattoo -Root $Root -PropertyName $($Tatoo.Name) -PropertyValue $($Tatoo.value) -All
                 break
                 
             }
